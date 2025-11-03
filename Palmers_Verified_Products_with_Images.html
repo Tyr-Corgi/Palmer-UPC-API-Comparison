@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palmer's Verified Products with Images</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        .stat-box span {
+            font-size: 1.5em;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        
+        .no-image {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-name {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .product-db-name {
+            font-size: 0.9em;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        
+        .product-details {
+            display: grid;
+            gap: 8px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+        }
+        
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .detail-value {
+            color: #333;
+            font-weight: bold;
+        }
+        
+        .upc {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+        }
+        
+        .price {
+            color: #28a745;
+            font-size: 1.2em;
+        }
+        
+        .source-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.75em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .source-upcitemdb {
+            background: #ffd700;
+            color: #333;
+        }
+        
+        .source-openfoodfacts {
+            background: #28a745;
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 Palmer's Verified Products</h1>
+            <p class="subtitle">UPC Database Verification Report with Product Images</p>
+            <div class="stats">
+                <div class="stat-box">
+                    <div>Total Verified</div>
+                    <span>35</span>
+                </div>
+                <div class="stat-box">
+                    <div>Products with Images</div>
+                    <span>24</span>
+                </div>
+                <div class="stat-box">
+                    <div>Data Sources</div>
+                    <span>2</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="products-grid">
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/065/752/275/0021/front_en.6.400.jpg" alt="Ecce Panis Mutligrain Boule" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Ecce Panis Mutligrain Boule</div>
+                    <div class="product-db-name">"PEPPERIDGE FARM BREAD MULTIGRAIN"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">657522750021</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$5.49</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/065/752/275/0038/front_en.4.400.jpg" alt="Ecce Panis Neo Tuscan Boule" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Ecce Panis Neo Tuscan Boule</div>
+                    <div class="product-db-name">"PEPPERIDGE FARM BREAD TUSCAN"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">657522750038</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$5.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">Soft Pretzel Mini Buns</div>
+                    <div class="product-db-name">"PRETZILLA SOFT PRETZEL MINI BUNS"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">673316036539</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">Soft Pretzel Sausage Buns</div>
+                    <div class="product-db-name">"PRETZILLA SOFT PRETZEL SAUSAGE BUNS"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">673316036584</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">Hammonds Spiral Rainbow Blast Lollipop</div>
+                    <div class="product-db-name">"Hammond's Candies B4cb Waterproof Rainproof Dust Proof Rain Cover For Camera Nikon Canon Pentax"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">691355885260</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">020 CANDY/GUM</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$3.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">Kb Patriotic Mini Cc Tr</div>
+                    <div class="product-db-name">"ASSORTED CUPCAKES"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981031033</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$12.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/103/4034/front_en.3.400.jpg" alt="VANILLA SPRING CUPCAKES" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">VANILLA SPRING CUPCAKES</div>
+                    <div class="product-db-name">"Two-Bite Two-Bite Mini Spring Vanilla Cupcakes, 10 Oz"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981034034</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.59</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/103/4102/front_en.3.400.jpg" alt="GNG 12PK CC VAL GOLD" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">GNG 12PK CC VAL GOLD</div>
+                    <div class="product-db-name">"Vanilla cupcakes"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981034102</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$0.00</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">GNG PATRIOTIC VAN CC</div>
+                    <div class="product-db-name">"VANILLA CUPCAKES"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981034409</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.59</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/103/4607/front_en.3.400.jpg" alt="2BITE XMAS MINI GOLD" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">2BITE XMAS MINI GOLD</div>
+                    <div class="product-db-name">"Vannilla cupcakes"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981034607</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$4.29</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/103/4669/front_en.3.400.jpg" alt="GNG 12PK CC ST PAT" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">GNG 12PK CC ST PAT</div>
+                    <div class="product-db-name">"Vanilla and chocolate cupcakes"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981034669</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$4.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">2BITE X MAS MINI CC CHO</div>
+                    <div class="product-db-name">"CHOCOLATE CUPCAKES, ORIGINAL"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981044606</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$4.29</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">GNG 12PK CC CHOC FALL</div>
+                    <div class="product-db-name">"CHOCOLATE CUPCAKES"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981044705</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$4.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/105/5220/front_en.4.400.jpg" alt="GNG 12PK STRAW SHORTCAK" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">GNG 12PK STRAW SHORTCAK</div>
+                    <div class="product-db-name">"VANILLA CAKE FILLED WITH STRAWBERRY FILLING TOPPED WITH VANILLA FROSTING AND STRAWBERRY RIBBON, STRAWBERRY SHORTCAKE CUPCAKES"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981055220</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.59</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">Two Bite Cinnamon Roll Tub</div>
+                    <div class="product-db-name">"ORIGINAL CINNAMON ROLLS, ORIGINAL"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981081014</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$5.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/109/2706/front_en.3.400.jpg" alt="Gng Pumpkin Madeline" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Gng Pumpkin Madeline</div>
+                    <div class="product-db-name">"Two-Bite pumpkin spice madeline"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981092706</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/130/1990/front_en.3.400.jpg" alt="Kim Frosted Oreo Cookies" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Kim Frosted Oreo Cookies</div>
+                    <div class="product-db-name">"Food lion Oreo cookies and creme"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981301990</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/130/2027/front_en.3.400.jpg" alt="Kims Vday Frosted" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Kims Vday Frosted</div>
+                    <div class="product-db-name">"Frosted soft sugsr cookies"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981302027</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/130/2126/front_en.3.400.jpg" alt="KIM PATRIOTIC FSTD CKS" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">KIM PATRIOTIC FSTD CKS</div>
+                    <div class="product-db-name">"Kimberley's Bakeshoppe Frosted soft augar cookies"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981302126</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/130/2287/front_en.9.400.jpg" alt="Kim Frosted Unicorn Cookies" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Kim Frosted Unicorn Cookies</div>
+                    <div class="product-db-name">"Kimberley's Bakeshoppe Frosted"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981302287</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/077/098/132/3046/front_en.3.400.jpg" alt="GNG 12PK MINI FALL DNTS" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">GNG 12PK MINI FALL DNTS</div>
+                    <div class="product-db-name">"Two-bite Two-bite, Variety Pack Iced Donuts"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981323046</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">GNG 12PK MINI XMAS DNTS</div>
+                    <div class="product-db-name">"Two-bite Iced Donuts"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">770981323060</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">Atlanta's New York Cheesecake</div>
+                    <div class="product-db-name">"NEW YORK STYLE CHEESECAKE SLICES"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">785391700714</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/079/292/910/0120/front_en.3.400.jpg" alt="Zurro's Bastone Seed" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Zurro's Bastone Seed</div>
+                    <div class="product-db-name">"Frank Zurro's bread"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">792929100120</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$3.49</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/081/000/615/0674/front_en.3.400.jpg" alt="Superior On Main - Iced Cake Cookies - Dipped Strawberry - 9 Ounce" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Superior On Main - Iced Cake Cookies - Dipped Strawberry - 9 Ounce</div>
+                    <div class="product-db-name">"iced cake cookies"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">810006150674</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$5.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/081/015/393/0266/front_en.5.400.jpg" alt="Gg P1 EAs Med Sweet" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Gg P1 EAs Med Sweet</div>
+                    <div class="product-db-name">"Green Giant Sweet peas"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">810153930266</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">001 GROCERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$2.29</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/081/166/902/0007/front_en.19.400.jpg" alt="St. Pierre Sliced Brioche Loaf" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">St. Pierre Sliced Brioche Loaf</div>
+                    <div class="product-db-name">"St Pierre PREMIUM AUTHENTIC FRENCH BRIOCHE LOAF"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">811669020007</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$8.49</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/081/166/902/0304/front_en.18.400.jpg" alt="St. Pierre Brioche Hot Dog Rolls" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">St. Pierre Brioche Hot Dog Rolls</div>
+                    <div class="product-db-name">"St. Pierre PRE-CUT HOT DOG ROLLS"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">811669020304</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$6.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/081/166/902/0427/front_en.4.400.jpg" alt="St. Pierre Slider Rolls" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">St. Pierre Slider Rolls</div>
+                    <div class="product-db-name">"St. Pierre BRIOCHE SLIDER ROLLS"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">811669020427</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$8.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-upcitemdb">UPCitemdb</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="no-image">No Image Available</div>
+                <div class="product-info">
+                    <div class="product-name">Bisou Whoopie Pie 4pk</div>
+                    <div class="product-db-name">"Bisousweet Chocolate Whoopie Pies"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">851040006435</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$7.59</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/085/104/000/6633/front_en.3.400.jpg" alt="Bisousweet Lemon Poppyseed Muffi" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Bisousweet Lemon Poppyseed Muffi</div>
+                    <div class="product-db-name">"Lemon Poppy Seed Doughnut Muffins"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">851040006633</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$8.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/085/104/000/6640/front_en.3.400.jpg" alt="Chocolate Chip Doughnut Muffins" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Chocolate Chip Doughnut Muffins</div>
+                    <div class="product-db-name">"Bisousweet Confections Cinnamon Doughnut Muffins"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">851040006640</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$8.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/085/104/000/6664/front_en.3.400.jpg" alt="Bisousweet Blueberry Don Muffins" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">Bisousweet Blueberry Don Muffins</div>
+                    <div class="product-db-name">"Bisousweet doughnut blueberry"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">851040006664</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$8.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/085/104/000/6671/front_en.3.400.jpg" alt="French Cinnamon Doughnut Muffin" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">French Cinnamon Doughnut Muffin</div>
+                    <div class="product-db-name">"Bisou Sweet Cinnamon Doughnut Muffins"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">851040006671</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$8.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.openfoodfacts.org/images/products/085/104/000/6725/front_en.10.400.jpg" alt="BSWT PUMPKIN DGHNT MUFN" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">BSWT PUMPKIN DGHNT MUFN</div>
+                    <div class="product-db-name">"Bisous Sweet Pumpkin Doughnut Muffins"</div>
+                    <div class="product-details">
+                        <div class="detail-row">
+                            <span class="detail-label">UPC:</span>
+                            <span class="detail-value upc">851040006725</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department:</span>
+                            <span class="detail-value">008 BAKERY</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Size:</span>
+                            <span class="detail-value">1 EA</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value price">$8.99</span>
+                        </div>
+                    </div>
+                    <span class="source-badge source-openfoodfacts">OpenFoodFacts</span>
+                </div>
+            </div>
+
+        </div>
+        
+        <footer>
+            <p><strong>Report Generated:</strong> November 2, 2025</p>
+            <p>Data sources: UPCitemdb & OpenFoodFacts</p>
+            <p>Palmer's Barcode Master List - 500 Sample Verification</p>
+        </footer>
+    </div>
+</body>
+</html>
