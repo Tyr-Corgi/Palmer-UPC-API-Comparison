@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5 Random EAN Codes - Product Data</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .success-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: top;
+        }
+        
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .product-image {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .product-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.05em;
+            margin-bottom: 5px;
+        }
+        
+        .brand {
+            color: #667eea;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .category {
+            color: #666;
+            font-size: 0.85em;
+            font-style: italic;
+        }
+        
+        .code-block {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            margin: 3px 0;
+            border-left: 3px solid #667eea;
+        }
+        
+        .upc {
+            color: #333;
+        }
+        
+        .ean {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .description {
+            color: #555;
+            font-size: 0.9em;
+            line-height: 1.5;
+            max-width: 400px;
+        }
+        
+        .size-badge {
+            display: inline-block;
+            background: #ffc107;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .api-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .api-info strong {
+            color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 5 Random EAN Code Test Results</h1>
+            <p class="subtitle">Product Data Retrieved from Barcode Lookup API</p>
+            <div class="success-badge">✓ 100% Success Rate (5/5 Found)</div>
+        </header>
+        
+        <div class="table-container">
+            <h2 style="color: #667eea; margin-bottom: 20px;">Product Details with EAN-13 Codes</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Product Details</th>
+                        <th>UPC-A / EAN-13</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Product 1 -->
+                    <tr>
+                        <td><strong>1</strong></td>
+                        <td>
+                            <img src="https://images.barcodelookup.com/25514/255140441-1.jpg" alt="Stonewall Kitchen Maple Brown Butter Waffle Cookie" class="product-image">
+                        </td>
+                        <td>
+                            <div class="product-title">Stonewall Kitchen Maple Brown Butter Waffle Cookie</div>
+                            <div class="brand">🏷️ Stonewall Kitchen</div>
+                            <div class="size-badge">1.1 OZ</div>
+                            <div class="category">Food, Beverages & Tobacco › Snack Foods</div>
+                        </td>
+                        <td>
+                            <div class="code-block upc">UPC-A: 711381332580</div>
+                            <div class="code-block ean">EAN-13: 0711381332580</div>
+                        </td>
+                        <td>
+                            <div class="description">Traditionally known as stroopwafels, these popular treats from the Netherlands date back to 19th-century Europe. For our modern take on this classic, thin cookies are sandwiched together with a gooey caramel sauce made with maple, molasses and a dash of sea salt for a sweet, satisfying snack.</div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Product 2 -->
+                    <tr>
+                        <td><strong>2</strong></td>
+                        <td>
+                            <img src="https://images.barcodelookup.com/3801/38010513-1.jpg" alt="Tumaro's Wraps" class="product-image">
+                        </td>
+                        <td>
+                            <div class="product-title">Tumaro's 8" Carb Wise Multi Grain Wraps</div>
+                            <div class="brand">🏷️ Tumaro's</div>
+                            <div class="size-badge">11.2 OZ</div>
+                            <div class="category">Food, Beverages & Tobacco</div>
+                        </td>
+                        <td>
+                            <div class="code-block upc">UPC-A: 849455000032</div>
+                            <div class="code-block ean">EAN-13: 0849455000032</div>
+                        </td>
+                        <td>
+                            <div class="description">Healthy, soft tortilla wraps made with lots of protein and fibre to fit a vegan and low carb diet. Pack of 8 wraps.</div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Product 3 -->
+                    <tr>
+                        <td><strong>3</strong></td>
+                        <td>
+                            <img src="https://images.barcodelookup.com/3799/37998412-1.jpg" alt="Lillie's Q BBQ Sauce" class="product-image">
+                        </td>
+                        <td>
+                            <div class="product-title">Lillie's Q Ivory BBQ Sauce</div>
+                            <div class="brand">🏷️ Lillie's Q</div>
+                            <div class="size-badge">16 OZ</div>
+                            <div class="category">Condiments & Sauces › Marinades & Grilling Sauces</div>
+                        </td>
+                        <td>
+                            <div class="code-block upc">UPC-A: 858183005059</div>
+                            <div class="code-block ean">EAN-13: 0858183005059</div>
+                        </td>
+                        <td>
+                            <div class="description">This mayonnaise-based sauce is a true Alabama white barbeque sauce with a pinch of cayenne. Weight: 1 ounce.</div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Product 4 -->
+                    <tr>
+                        <td><strong>4</strong></td>
+                        <td>
+                            <img src="https://images.barcodelookup.com/9061/90616775-1.jpg" alt="Bella Maria Spanish Cocktail Mix" class="product-image">
+                        </td>
+                        <td>
+                            <div class="product-title">Bella Maria Spanish Cocktail Mix</div>
+                            <div class="brand">🏷️ Russell McCall's Inc.</div>
+                            <div class="size-badge">3.5 OZ</div>
+                            <div class="category">Food, Beverages & Tobacco › Food Items</div>
+                        </td>
+                        <td>
+                            <div class="code-block upc">UPC-A: 820581153908</div>
+                            <div class="code-block ean">EAN-13: 0820581153908</div>
+                        </td>
+                        <td>
+                            <div class="description">Spanish Cocktail Mix. Serving size: 0.25 cup. Perfect for entertaining.</div>
+                        </td>
+                    </tr>
+                    
+                    <!-- Product 5 -->
+                    <tr>
+                        <td><strong>5</strong></td>
+                        <td>
+                            <img src="https://images.barcodelookup.com/1840/18403558-1.jpg" alt="InkaCrops Giant Corn" class="product-image">
+                        </td>
+                        <td>
+                            <div class="product-title">InkaCrops Giant Corn Chile Picante</div>
+                            <div class="brand">🏷️ InkaCrops</div>
+                            <div class="size-badge">4.0 Ounce</div>
+                            <div class="category">Food, Beverages & Tobacco › Snack Foods › Chips</div>
+                        </td>
+                        <td>
+                            <div class="code-block upc">UPC-A: 819046000420</div>
+                            <div class="code-block ean">EAN-13: 0819046000420</div>
+                        </td>
+                        <td>
+                            <div class="description">The Peruvian Giant Anytime Snack. All Natural. 0g Trans Fats. Gluten Free. Non-GMO Project Verified. Kosher. This corn can be enjoyed as it is or added as a topping to salads.</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="api-info">
+                <strong>API Data Includes:</strong> Product images, titles, brands, manufacturers, categories, UPC-A/EAN-13 codes, descriptions, dimensions, and retailer availability.
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>Test Date:</strong> November 3, 2025</p>
+            <p>Data Source: Barcode Lookup API</p>
+            <p>5 Random EAN Codes from Palmer's Master List</p>
+        </footer>
+    </div>
+</body>
+</html>
+

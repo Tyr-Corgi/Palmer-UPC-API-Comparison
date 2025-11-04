@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Lookup API Test Results</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-box .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .stat-box .value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .products-grid {
+            display: grid;
+            gap: 25px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-card.not-found {
+            opacity: 0.6;
+            background: #f8d7da;
+        }
+        
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .product-title {
+            flex: 1;
+        }
+        
+        .product-title h2 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .product-brand {
+            color: #667eea;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .status-found {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-not-found {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .product-images {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .product-image {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .product-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .detail-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .detail-section h3 {
+            color: #667eea;
+            font-size: 1em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        
+        .detail-item {
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+        
+        .detail-label {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .detail-value {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .upc-code {
+            font-family: 'Courier New', monospace;
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            display: inline-block;
+        }
+        
+        .description {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff9e6;
+            border-radius: 10px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .features {
+            margin-top: 15px;
+        }
+        
+        .features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Barcode Lookup API Test Results</h1>
+            <p class="subtitle">Testing 10 Random Palmer's UPCs</p>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="label">Total Tested</div>
+                    <div class="value">10</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">Found</div>
+                    <div class="value">7</div>
+                </div>
+                <div class="stat-box">
+                    <div class="label">Success Rate</div>
+                    <div class="value">70%</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="products-grid">
+            
+            <!-- Product 1 -->
+            <div class="product-card">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2>Soft Pretzel Mini Buns</h2>
+                        <div class="product-brand">Pretzilla</div>
+                        <div style="margin-top: 10px;">
+                            <span class="upc-code">673316036539</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-found">FOUND</span>
+                </div>
+                
+                <div class="product-images">
+                    <img src="https://images.barcodelookup.com/5634/56347651-1.jpg" alt="Soft Pretzel Mini Buns" class="product-image">
+                </div>
+                
+                <div class="product-details">
+                    <div class="detail-section">
+                        <h3>Product Info</h3>
+                        <div class="detail-item"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Miller Bakery</span></div>
+                        <div class="detail-item"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                        <div class="detail-item"><span class="detail-label">Weight:</span> <span class="detail-value">1.00 lb</span></div>
+                    </div>
+                </div>
+                
+                <div class="description">
+                    <strong>Description:</strong> Soft pretzel mini buns. Serving size: 1 BUN (40 g). Allergens: En:gluten. Country of origin: United States.
+                </div>
+                
+                <div class="features">
+                    <strong>Features:</strong>
+                    <ul>
+                        <li>Taste so big, other buns may go extinct</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Product 2 -->
+            <div class="product-card">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2>Two-bite, Assorted Cupcakes</h2>
+                        <div class="product-brand">Two-Bite</div>
+                        <div style="margin-top: 10px;">
+                            <span class="upc-code">770981031026</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-found">FOUND</span>
+                </div>
+                
+                <div class="product-images">
+                    <img src="https://images.barcodelookup.com/9063/90630764-1.jpg" alt="Two-bite Cupcakes" class="product-image">
+                </div>
+                
+                <div class="product-details">
+                    <div class="detail-section">
+                        <h3>Product Info</h3>
+                        <div class="detail-item"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Two-bite</span></div>
+                        <div class="detail-item"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                    </div>
+                </div>
+                
+                <div class="description">
+                    <strong>Description:</strong> Two-bite, assorted cupcakes. Serving size: 3 CUPCAKES (71 g). Allergens: En:milk. Country of origin: Canada.
+                </div>
+            </div>
+            
+            <!-- Product 3 -->
+            <div class="product-card not-found">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2>Hammonds Spiral Rainbow Blast Lollipop</h2>
+                        <div style="margin-top: 10px;">
+                            <span class="upc-code">691355885260</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-not-found">NOT FOUND</span>
+                </div>
+                
+                <p style="color: #721c24;">This UPC was not found in the Barcode Lookup database.</p>
+            </div>
+            
+            <!-- Product 4 -->
+            <div class="product-card">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2>Multi-grain Boule Gourmet Artisan Breads</h2>
+                        <div class="product-brand">Ecce Panis, Inc.</div>
+                        <div style="margin-top: 10px;">
+                            <span class="upc-code">657522750021</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-found">FOUND</span>
+                </div>
+                
+                <div class="product-details">
+                    <div class="detail-section">
+                        <h3>Product Info</h3>
+                        <div class="detail-item"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                    </div>
+                </div>
+                
+                <div class="description">
+                    <strong>Description:</strong> Multi-grain boule gourmet artisan breads, multi-grain boule. Serving size: 1 INCH SLICE (57 g). Country of origin: United States.
+                </div>
+            </div>
+            
+            <!-- Product 5 -->
+            <div class="product-card">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2>Classic Recipe Ciabatta</h2>
+                        <div style="margin-top: 10px;">
+                            <span class="upc-code">606991010402</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-found">FOUND</span>
+                </div>
+                
+                <div class="product-images">
+                    <img src="https://images.barcodelookup.com/4741/47411608-1.jpg" alt="Classic Recipe Ciabatta" class="product-image">
+                </div>
+                
+                <div class="product-details">
+                    <div class="detail-section">
+                        <h3>Product Info</h3>
+                        <div class="detail-item"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Purex</span></div>
+                        <div class="detail-item"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                    </div>
+                </div>
+                
+                <div class="description">
+                    <strong>Description:</strong> Classic Recipe Ciabatta. Country of origin: United States.
+                </div>
+            </div>
+            
+            <!-- Product 6 -->
+            <div class="product-card">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2>Chocolate Cupcakes</h2>
+                        <div style="margin-top: 10px;">
+                            <span class="upc-code">770981044101</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-found">FOUND</span>
+                </div>
+                
+                <div class="product-images">
+                    <img src="https://images.barcodelookup.com/81674/816747280-1.jpg" alt="Chocolate Cupcakes" class="product-image">
+                    <img src="https://images.barcodelookup.com/81674/816747280-2.jpg" alt="Chocolate Cupcakes" class="product-image">
+                </div>
+                
+                <div class="product-details">
+                    <div class="detail-section">
+                        <h3>Product Info</h3>
+                        <div class="detail-item"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                    </div>
+                </div>
+                
+                <div class="description">
+                    <strong>Description:</strong> Chocolate cupcakes. Country of origin: United States.
+                </div>
+            </div>
+            
+            <!-- Product 7 -->
+            <div class="product-card not-found">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2>Eli's Brioche Hamburger Rolls</h2>
+                        <div style="margin-top: 10px;">
+                            <span class="upc-code">739398207400</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-not-found">NOT FOUND</span>
+                </div>
+                
+                <p style="color: #721c24;">This UPC was not found in the Barcode Lookup database.</p>
+            </div>
+            
+            <!-- Product 8 -->
+            <div class="product-card">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2>My Grandma's 28-oz Coffee Cake</h2>
+                        <div class="product-brand">My Grandma's Of New England</div>
+                        <div style="margin-top: 10px;">
+                            <span class="upc-code">701826100010</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-found">FOUND</span>
+                </div>
+                
+                <div class="product-images">
+                    <img src="https://images.barcodelookup.com/4499/44992614-1.jpg" alt="My Grandma's Coffee Cake" class="product-image">
+                </div>
+                
+                <div class="product-details">
+                    <div class="detail-section">
+                        <h3>Product Info</h3>
+                        <div class="detail-item"><span class="detail-label">Manufacturer:</span> <span class="detail-value">My Grandma's Of New England</span></div>
+                        <div class="detail-item"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                        <div class="detail-item"><span class="detail-label">Available at:</span> <span class="detail-value">5 stores</span></div>
+                    </div>
+                </div>
+                
+                <div class="description">
+                    <strong>Description:</strong> A decadent dessert, brag-worthy breakfast, or sumptuous snack -- this coffee cake is a tasty treat any time of day.
+                </div>
+                
+                <div class="features">
+                    <strong>Features:</strong>
+                    <ul>
+                        <li>Manufactured to the Highest Quality Available</li>
+                        <li>Design is stylish and innovative. Satisfaction Ensured</li>
+                        <li>Great Gift Idea</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Product 9 -->
+            <div class="product-card">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2>Vanilla Cupcakes</h2>
+                        <div class="product-brand">Two-Bite</div>
+                        <div style="margin-top: 10px;">
+                            <span class="upc-code">770981034034</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-found">FOUND</span>
+                </div>
+                
+                <div class="product-images">
+                    <img src="https://images.barcodelookup.com/12085/120857698-1.jpg" alt="Vanilla Cupcakes" class="product-image">
+                </div>
+                
+                <div class="product-details">
+                    <div class="detail-section">
+                        <h3>Product Info</h3>
+                        <div class="detail-item"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                    </div>
+                </div>
+                
+                <div class="description">
+                    <strong>Description:</strong> Vanilla Cupcakes. Country of origin: United States.
+                </div>
+            </div>
+            
+            <!-- Product 10 -->
+            <div class="product-card not-found">
+                <div class="product-header">
+                    <div class="product-title">
+                        <h2>Tom Cat Baguette</h2>
+                        <div style="margin-top: 10px;">
+                            <span class="upc-code">705105677736</span>
+                        </div>
+                    </div>
+                    <span class="status-badge status-not-found">NOT FOUND</span>
+                </div>
+                
+                <p style="color: #721c24;">This UPC was not found in the Barcode Lookup database.</p>
+            </div>
+            
+        </div>
+        
+        <footer>
+            <p><strong>Test Date:</strong> November 3, 2025</p>
+            <p>Data Source: Barcode Lookup API</p>
+            <p>Success Rate: 70% (7 out of 10 UPCs found with product data and images)</p>
+        </footer>
+    </div>
+</body>
+</html>
+

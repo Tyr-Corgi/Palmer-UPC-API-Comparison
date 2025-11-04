@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Image Comparison - Side by Side</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .api-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .api-summary h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+        
+        .api-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .api-summary-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .api-summary-card.barcode-lookup {
+            border-left-color: #4caf50;
+        }
+        
+        .api-summary-card.apify {
+            border-left-color: #2196f3;
+        }
+        
+        .api-summary-card.upcitemdb {
+            border-left-color: #ff9800;
+        }
+        
+        .api-summary-card.go-upc {
+            border-left-color: #9e9e9e;
+        }
+        
+        .api-summary-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        
+        .api-summary-card .api-website {
+            font-size: 0.85em;
+            color: #667eea;
+            margin-bottom: 15px;
+            word-break: break-all;
+        }
+        
+        .api-summary-card .detail-row-summary {
+            margin: 8px 0;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        
+        .api-summary-card .detail-label-summary {
+            font-weight: 600;
+            color: #555;
+            display: inline-block;
+            min-width: 110px;
+        }
+        
+        .api-summary-card .detail-value-summary {
+            color: #333;
+        }
+        
+        .test-results-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        
+        .badge-100 {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .badge-90 {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .badge-pending {
+            background: #9e9e9e;
+            color: white;
+        }
+        
+        .summary-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .row-number {
+            position: sticky;
+            left: 0;
+            top: 0;
+            min-width: 60px;
+            height: fit-content;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 0 0 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            padding: 20px 10px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+        
+        .product-card-content {
+            flex: 1;
+        }
+        
+        .product-header {
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .product-title {
+            font-size: 1.8em;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .product-meta {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: #666;
+        }
+        
+        .ean-code {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .image-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .api-column {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .api-column.barcode-lookup {
+            border-left: 5px solid #4caf50;
+        }
+        
+        .api-column.apify {
+            border-left: 5px solid #2196f3;
+        }
+        
+        .api-column.upcitemdb {
+            border-left: 5px solid #ff9800;
+        }
+        
+        .api-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .api-name.barcode-lookup-color {
+            color: #4caf50;
+        }
+        
+        .api-name.apify-color {
+            color: #2196f3;
+        }
+        
+        .api-name.upcitemdb-color {
+            color: #ff9800;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .image-info {
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .product-details {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+            font-size: 0.85em;
+        }
+        
+        .product-details h4 {
+            color: #667eea;
+            font-size: 1em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .detail-row {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #333;
+            display: inline-block;
+            min-width: 90px;
+        }
+        
+        .detail-value {
+            color: #555;
+        }
+        
+        .description-text {
+            font-style: italic;
+            color: #666;
+            margin-top: 5px;
+            line-height: 1.4;
+        }
+        
+        .resolution {
+            font-family: 'Courier New', monospace;
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+        
+        .image-count {
+            background: #ff9800;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+        
+        .not-found {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-style: italic;
+        }
+        
+        .api-title {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 10px;
+            min-height: 40px;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📸 API Image Comparison</h1>
+            <p style="font-size: 1.2em; color: #666; margin-top: 10px;">Side-by-Side Image Quality & Resolution Analysis</p>
+        </header>
+        
+        <!-- API Summary Section -->
+        <div class="api-summary">
+            <h2>💰 API Pricing & Information Summary</h2>
+            <div class="api-summary-grid">
+                <!-- Barcode Lookup API -->
+                <div class="api-summary-card barcode-lookup">
+                    <h3>🏆 Barcode Lookup API</h3>
+                    <div class="api-website">barcodelookup.com/api</div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Plan:</span>
+                        <span class="detail-value-summary">Advanced Plan</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Cost:</span>
+                        <span class="detail-value-summary"><strong>$249/month</strong></span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Per UPC:</span>
+                        <span class="detail-value-summary">$0.0265</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Calls/Month:</span>
+                        <span class="detail-value-summary">25,000</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Batch Support:</span>
+                        <span class="detail-value-summary">❌ No (per-call)</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Time:</span>
+                        <span class="detail-value-summary">Hours to 1 day</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Test Results:</span>
+                        <span class="test-results-badge badge-100">15/15 (100%)</span>
+                    </div>
+                </div>
+                
+                <!-- UPCitemdb -->
+                <div class="api-summary-card upcitemdb">
+                    <h3>🏆 UPCitemdb</h3>
+                    <div class="api-website">devs.upcitemdb.com/#plans</div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Plan:</span>
+                        <span class="detail-value-summary">Developer Plan</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Cost:</span>
+                        <span class="detail-value-summary"><strong>$99/month</strong></span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Per UPC:</span>
+                        <span class="detail-value-summary">$0.0105</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Lookups/Day:</span>
+                        <span class="detail-value-summary">20,000</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Batch Support:</span>
+                        <span class="detail-value-summary">⚠️ Limited (2,000/sheet)</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Time:</span>
+                        <span class="detail-value-summary">~5-6 hours</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Test Results:</span>
+                        <span class="test-results-badge badge-90">13/15 (87%)</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Images:</span>
+                        <span class="detail-value-summary">Most images per product!</span>
+                    </div>
+                </div>
+                
+                <!-- Apify EAN/GTIN -->
+                <div class="api-summary-card apify">
+                    <h3>🏆 Apify EAN/GTIN</h3>
+                    <div class="api-website">apify.com/ean-product-image-search</div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Plan:</span>
+                        <span class="detail-value-summary">Pay-per-use</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Cost:</span>
+                        <span class="detail-value-summary"><strong>$10 per 1,000 images</strong></span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">For 9,394 UPCs:</span>
+                        <span class="detail-value-summary">~$94 (one-time)</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Per UPC:</span>
+                        <span class="detail-value-summary">$0.01</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Batch Support:</span>
+                        <span class="detail-value-summary">✅ Yes - Batch extract</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Time:</span>
+                        <span class="detail-value-summary">~Hours</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Test Results:</span>
+                        <span class="test-results-badge badge-100">14/15 (93%)</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Quality:</span>
+                        <span class="detail-value-summary">High-res (600x600px - 1280x1280px)</span>
+                    </div>
+                </div>
+                
+                <!-- Go-UPC -->
+                <div class="api-summary-card go-upc">
+                    <h3>⏳ Go-UPC API</h3>
+                    <div class="api-website">go-upc.com/plans</div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Plan:</span>
+                        <span class="detail-value-summary">Startup Plan</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Cost:</span>
+                        <span class="detail-value-summary"><strong>$245/month</strong></span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Per UPC:</span>
+                        <span class="detail-value-summary">$0.026</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Calls/Month:</span>
+                        <span class="detail-value-summary">45,000</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Batch Support:</span>
+                        <span class="detail-value-summary">❌ No (per-call)</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Time:</span>
+                        <span class="detail-value-summary">~1 day</span>
+                    </div>
+                    <div class="detail-row-summary">
+                        <span class="detail-label-summary">Status:</span>
+                        <span class="test-results-badge badge-pending">Trial Key Pending</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="summary-note">
+                <strong>📊 Project Summary:</strong> Testing 15 random EAN codes from Palmer's master list (9,394 total UPCs). 
+                <strong>Barcode Lookup API</strong> achieved 100% success rate (15/15). 
+                <strong>Apify</strong> achieved 93% success rate (14/15). 
+                <strong>UPCitemdb</strong> achieved 87% success rate (13/15) with the most images per product (up to 9 images each). 
+                All APIs provide comprehensive product data including images, descriptions, categories, and manufacturer information.
+            </div>
+        </div>
+        
+        <!-- Product 1: Stonewall Kitchen Waffle Cookie -->
+        <div class="product-card">
+            <div class="row-number">1</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">1. Stonewall Kitchen Maple Brown Butter Waffle Cookie</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0711381332580</span>
+                    <span>Size: 1.1 OZ</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Stonewall Kitchen Maple Brown Butter Waffle Cookie</div>
+                    <img src="https://images.barcodelookup.com/25514/255140441-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Stonewall Kitchen</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Stonewall Kitchen</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco > Food Items > Snack Foods</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 711381332580, EAN-13 0711381332580</span></div>
+                        <div class="description-text">Traditionally known as stroopwafels, these popular treats from the Netherlands date back to 19th-century Europe. For our modern take on this classic, thin cookies are sandwiched together with a gooey caramel sauce made with maple, molasses and a dash of sea salt for a sweet, satisfying snack.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Stonewall Kitchen Waffle Cookie, Maple Brown Butter</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/AuGy5ZCG2vBBPP5Xf/records/ean_0711381332580_01.webp?signature=XgLCkJuv0rjeEpRb1noN" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: WebP</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Stonewall Kitchen Waffle Cookie, Maple Brown Butter</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">653,542 bytes (~637 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 22:57:28</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">UPCitemdb</div>
+                    <div class="not-found">
+                        ✗ Not Found<br>
+                        <small>This product was not found in UPCitemdb</small>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Product 2: Tumaro's Wraps -->
+        <div class="product-card">
+            <div class="row-number">2</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">2. Tumaro's Multi Grain Wraps</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0849455000032</span>
+                    <span>Size: 11.2 OZ</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Tumaro's 8" Carb Wise Multi Grain Wraps</div>
+                    <img src="https://images.barcodelookup.com/3801/38010513-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Tumaro's</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Tumaro S</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 849455000032, EAN-13 0849455000032</span></div>
+                        <div class="description-text">Shop Tumaro's Carb Wise Multigrain Wraps for healthy, soft tortilla wraps made with lots of protein and fibre to fit a vegan and low carb diet.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Tumaro's 8-inch Multi Grain Carb Wise Wraps Case Of 6</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/AuGy5ZCG2vBBPP5Xf/records/ean_0849455000032_01.jpg?signature=19zbyZYMA6GrsbuCt4YGu" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Tumaro's 8-inch Multi Grain Carb Wise Wraps Case Of 6</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">266,441 bytes (~260 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 22:57:28</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">MULTI-GRAIN 8 LOW-IN-CARB WRAPS</div>
+                    <img src="https://target.scene7.com/is/image/Target/GUEST_f025fff8-0e4a-4fd8-a296-cb5a49635b7c?wid=1000&hei=1000" alt="Product" class="product-image" onerror="this.src='https://i5.walmartimages.com/asr/b8886efb-662a-4634-9f26-478c75519bd3.d0131942c9b440e0a9e63f69c8957190.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff'">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px (Target image)</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 4 images available!</div>
+                        <div style="margin-top: 5px; font-size: 0.85em; color: #666;">Showing best quality image</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">MULTI-GRAIN 8 LOW-IN-CARB WRAPS</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">4 images from multiple retailers</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Continue with remaining products -->
+        <div class="product-card">
+            <div class="row-number">3</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">3. Lillie's Q Ivory Barbeque</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0858183005059</span>
+                    <span>Size: 16 OZ</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Lillies's Q Ivory BBQ Sauce</div>
+                    <img src="https://images.barcodelookup.com/3799/37998412-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Lillie's Q</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Lillie's Q</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco > Food Items > Condiments & Sauces > Marinades & Grilling Sauces</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value">1 ounces</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 858183005059, EAN-13 0858183005059</span></div>
+                        <div class="description-text">This mayonnaise-based sauce is a true Alabama white barbeque sauce with a pinch of cayenne.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Lillie's Q Ivory Northern Alabama White Barbecue Sauce</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/AuGy5ZCG2vBBPP5Xf/records/ean_0858183005059_01.jpg?signature=18XD3kQATgL459sQyKXA1" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Lillie's Q Ivory Northern Alabama White Barbecue Sauce</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">155,363 bytes (~152 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 22:57:29</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">IVORY TRADITIONAL ALABAMA STYLE BARBECUE SAUCE</div>
+                    <img src="https://i5.walmartimages.com/asr/64334b87-b68f-4263-97bc-615717fd6bb7.2c2fe998189cdc6e9572a2e6b340142b.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 450 x 450px</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 2 images available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">IVORY TRADITIONAL ALABAMA STYLE BARBECUE SAUCE</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">2 images from retailers</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="row-number">4</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">4. Bella Maria Spanish Mix</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0820581153908</span>
+                    <span>Size: 3.5 OZ</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Bella Maria Spanish Cocktail Mix 3.5oz</div>
+                    <img src="https://images.barcodelookup.com/9061/90616775-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Russell McCall's Inc.</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Bella Maria</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco > Food Items</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 820581153908, EAN-13 0820581153908</span></div>
+                        <div class="description-text">Spanish Cocktail Mix. Serving size: 0.25 cup.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Bella Maria Spanish Cocktail Mix 3.5 Oz</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/AuGy5ZCG2vBBPP5Xf/records/ean_0820581153908_01.png?signature=1Lv5YQoaBc0zyiWzIXcqO" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 512 x 512px</div>
+                        <div style="margin-top: 5px;">✓ Medium-resolution image</div>
+                        <div>Format: PNG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Bella Maria Spanish Cocktail Mix 3.5 Oz</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">312,742 bytes (~305 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 22:57:29</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">SPANISH COCKTAIL MIX</div>
+                    <div class="not-found" style="padding: 40px;">
+                        ✓ Found<br>
+                        <div style="margin-top: 10px;">📸 0 images available</div>
+                        <small style="display: block; margin-top: 10px;">No images for this product</small>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">SPANISH COCKTAIL MIX</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">No images available</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="row-number">5</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">5. Inka Giant Corn Chile Picante</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0819046000420</span>
+                    <span>Size: 4.0 Ounce</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">InkaCrops Giant Corn Chile Picante 4 Oz</div>
+                    <img src="https://images.barcodelookup.com/1840/18403558-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">InkaCrops</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Inka Crops</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco > Food Items > Snack Foods > Chips</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value">0.275</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 819046000420, EAN-13 0819046000420</span></div>
+                        <div class="description-text">The Peruvian Giant Anytime Snack. All Natural. 0g Trans Fats. Gluten Free. Non-GMO Project Verified. Kosher. The Inka Crops Chile Picante Roasted Giant Corn is all-natural, gluten-free snack option. This corn can be enjoyed as it is or added as a topping to salads.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Inka Crops Chile Picante Roasted Giant Corn, 4 Ounce -- 6 Per Case</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/AuGy5ZCG2vBBPP5Xf/records/ean_0819046000420_01.jpg?signature=P1FE93FMcBg02QHiYebW" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Inka Crops Chile Picante Roasted Giant Corn, 4 Ounce -- 6 Per Case</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">217,485 bytes (~212 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 22:57:29</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">ROASTED GIANT CORN, CHILE PICANTE</div>
+                    <img src="https://i5.walmartimages.com/asr/2e069fb7-d45f-44c8-9f9e-0987fa3e2475.db91c8eedeaaa1dcc1c1e543d4412b0a.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 450 x 450px (first of 8 images)</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 8 images available!</div>
+                        <div style="margin-top: 5px; font-size: 0.85em; color: #666;">Most images of all APIs!</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">ROASTED GIANT CORN, CHILE PICANTE</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">8 images from multiple retailers</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="row-number">6</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">6. Suja Immunity Rebound Shot</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0818617022571</span>
+                    <span>Size: 2 Fl Oz</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">KHCH00353688 2 Fl Oz Immunity Rebound Shot Juice</div>
+                    <img src="https://images.barcodelookup.com/19808/198086595-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">SUJA</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">2/11180/20468</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Health & Beauty > Health Care > Fitness & Nutrition > Nutrition Drinks & Shakes</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value">1.00 lb</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 818617022571, EAN-13 0818617022571</span></div>
+                        <div class="description-text">Uh-oh, feeling run down? Take charge with the Immunity Elderberry shot that's brimming with zinc, live probiotics and elderberry to help you rebound back to living a long and beautiful life. Capacity: 2 fl oz; Weight: 0.17 lbs.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Suja Organic Wellness Shot, Elderberry Apple, Immunity 2 Fl Oz</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/mN24lprT43JAG4jV4/records/ean_0818617022571_01.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Suja Organic Wellness Shot, Elderberry Apple, Immunity 2 Fl Oz</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">134,097 bytes (~131 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:26:26</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">Suja Immunity Rebound Juice Shot with Elderberry</div>
+                    <img src="https://i5.walmartimages.com/asr/7c3a5e08-1fe3-40e4-b748-ad934c8f8ad8_1.eeefb18a28764ab1e0f48450fdd72686.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff" alt="Product" class="product-image" onerror="this.src='http://site.unbeatablesale.com/GRNDR265976.JPG'">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 450 x 450px</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 3 images available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Suja Immunity Rebound Juice Shot with Elderberry, Organic Juice, 2 Oz</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">3 images from retailers</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="row-number">7</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">7. S&C D FZD DNR PAT LMB 14OZ</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0186011000182</span>
+                    <span>Size: 14 Oz</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Stella & Chewy's Freeze Dried Raw Dinner Patties</div>
+                    <img src="https://images.barcodelookup.com/1032/10320818-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Stella & Chewy's</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Stella & Chewy's</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Food</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value">16.00</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 186011000182, EAN-13 0186011000182</span></div>
+                        <div class="description-text">Every pet parent wants wholesome, natural nutrition for their pet. Stella & Chewy's raw diets focus on pure ingredients and raw protein so you can feed them as nature intended.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Stella & Chewy's Dandy Lamb Grain Free Dinner Patties Freeze Dried Raw Dog Food</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/mN24lprT43JAG4jV4/records/ean_0186011000182_01.png" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: PNG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Stella & Chewy's Dandy Lamb Grain Free Dinner Patties Freeze Dried Raw Dog Food</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">795,449 bytes (~777 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:26:27</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">Stella & Chewy's Lamb Flavor Freeze-Dried Patties</div>
+                    <img src="https://target.scene7.com/is/image/Target/GUEST_98cbe698-5b66-40e8-b4f9-c85d69ff6d3a?wid=1000&hei=1000" alt="Product" class="product-image" onerror="this.src='https://assets.petco.com/petco/image/upload/f_auto%2Cq_auto%2Cw_700/dpr_auto/3719168-center-1'">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px (Target image)</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 8 images available!</div>
+                        <div style="margin-top: 5px; font-size: 0.85em; color: #666;">Showing best quality image</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Stella & Chewy's Lamb Flavor Freeze-Dried Patties Dry Dog Food - 14oz</span></div>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Stella & Chewy's</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">8 images from multiple retailers</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="row-number">8</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">8. Benadryl Extra Strength Itch Stopping Cream</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0312547171670</span>
+                    <span>Size: 1 Oz</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Benadryl Itch Relief Cream, Topical Analgesic, 1 Oz</div>
+                    <img src="https://images.barcodelookup.com/1502/15022259-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Benadryl</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Benadryl</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Health & Beauty > Health Care > First Aid</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value">0.10 lb</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 312547171670, EAN-13 0312547171670</span></div>
+                        <div class="description-text">Benadryl Itch Relief Cream, Topical Analgesic, 1 oz.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Benadryl Itch Stopping Cream, Extra Strength, For Ages 2+ - 1 Ounce</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/mN24lprT43JAG4jV4/records/ean_0312547171670_01.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Benadryl Itch Stopping Cream, Extra Strength, For Ages 2+ - 1 Ounce</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">299,139 bytes (~292 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:26:27</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">Benadryl Extra Strength Anti-Itch Topical Analgesic Cream</div>
+                    <img src="https://target.scene7.com/is/image/Target/GUEST_3935974e-6c0b-4a0b-9893-e238c57c7149?wid=1000&hei=1000" alt="Product" class="product-image" onerror="this.src='https://pics.walgreens.com/prodimg/13137/450.jpg'">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px (Target image)</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 10 images available!</div>
+                        <div style="margin-top: 5px; font-size: 0.85em; color: #ff9800; font-weight: bold;">⭐ Most images of all products!</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Benadryl Extra Strength Anti-Itch Topical Analgesic Cream - 1oz</span></div>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Benadryl</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">10 images from multiple retailers</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="row-number">9</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">9. Simply Gum Natural Mint Gum</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0852466006016</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Simply Gum Mint Natural Chewing Gum</div>
+                    <img src="https://images.barcodelookup.com/1033/10330920-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Simply Gum</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Simply Gum</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco > Food Items > Candy & Chocolate</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value">0.07</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 852466006016, EAN-13 0852466006016</span></div>
+                        <div class="description-text">Refreshing and subtly sweet, Simply Gum natural Mint chewing gum is simply delicious. They never use plastic, aspartame, or synthetics. That means their gum is not only better for your body, it's also biodegradable and better for the planet. Kosher and Non-GMO certified.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Simply Gum Peppermint Natural Chewing 15 Pieces</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/mN24lprT43JAG4jV4/records/ean_0852466006016_01.png" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1200 x 1200px</div>
+                        <div style="margin-top: 5px;">✓ Highest resolution!</div>
+                        <div>Format: PNG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Simply Gum Peppermint Natural Chewing 15 Pieces</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">491,439 bytes (~480 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:26:27</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">Simply Gum Natural Chewing Gum - 15ct</div>
+                    <img src="https://target.scene7.com/is/image/Target/GUEST_07e91a61-230e-4691-acee-5c96abe1645f?wid=1000&hei=1000" alt="Product" class="product-image" onerror="this.src='https://i5.walmartimages.com/asr/a3335c70-8c5a-41c6-a91e-048e8765c2d2_1.46765a48b47378350b0c3825a99a538d.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff'">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px (Target image)</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 7 images available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Simply Gum Natural Chewing Gum - 15ct</span></div>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Simply Gum</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">7 images from multiple retailers</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="row-number">10</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">10. POM Wonderful Pomegranate Juice</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0824150401162</span>
+                    <span>Size: 16 Ounce</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">POM Wonderful 100% Pomegranate Juice 16 Ounce</div>
+                    <img src="https://images.barcodelookup.com/2974/29742076-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Pom Wonderful Llc</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">POM Wonderful LLC</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value">1 ounces</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 824150401162, EAN-13 0824150401162</span></div>
+                        <div class="description-text">POM Wonderful 100% Pomegranate Juice. A little sweet a little tart and powered by pomegranate antioxidants POM Wonderful 100% Pomegranate Juice is a whole lot of healthy. Every 16oz bottle of POM is made with the juice from four whole pressed California pomegranates and nothing more - no fillers and never any added sugar.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">POM Wonderful From Concentrate 100% Pomegranate Juice 16 Fl Oz</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/mN24lprT43JAG4jV4/records/ean_0824150401162_01.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1080 x 1080px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">POM Wonderful From Concentrate 100% Pomegranate Juice 16 Fl Oz</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">214,814 bytes (~210 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:26:27</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">100% POMEGRANATE JUICE</div>
+                    <img src="https://target.scene7.com/is/image/Target/GUEST_c9e868d7-189a-4f84-bd8b-0ef754a6dbd4?wid=1000&hei=1000" alt="Product" class="product-image" onerror="this.src='https://i5.walmartimages.com/asr/107a9c10-9311-4ff1-95d1-2340c9f710cf_1.d4ec4df9ab668a75a483d9961a8e70f1.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff'">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px (Target image)</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 6 images available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">100% POMEGRANATE JUICE</span></div>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">POM Wonderful</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">6 images from multiple retailers</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Product 11: Think Thin Protein Bar -->
+        <div class="product-card">
+            <div class="row-number">11</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">11. Think Thin Chunky Chocolate Pe</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0753656710990</span>
+                    <span>Size: All</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">HG1536861 1.41 Oz Thinkthin Bar Lean Protein Fiber, Chocolate Peanut</div>
+                    <img src="https://images.barcodelookup.com/1032/10325579-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Think Products</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Think</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value">0.01lb</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 753656710990, EAN-13 0753656710990</span></div>
+                        <div class="description-text">Features   At only 150 calories, thinkThin Lean Protein and Fiber bars deliver the perfect balance of 10g of protein and 5g of fiber to give you energy and help keep you full and satisfied; Rich roast...</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Think Thin Protein & Fiber Bar Chunky Chocolate Peanut</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/vdXhXyrMrYGSfFob8/records/ean_0753656710990_01.jpg?signature=v7CiRrRggmSpJqQXnmUI" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1280 x 1280px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Think Thin Protein & Fiber Bar Chunky Chocolate Peanut</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">134,364 bytes (~131 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:58:23</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">THINK THIN, LEAN PROTEIN & FIBER BAR, PEANUT</div>
+                    <img src="https://i5.walmartimages.com/asr/d404f723-1a1b-49ef-8e4f-e69297d22dec.59b898ecca726553dc6e8f014075780b.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 450 x 450px</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 9 images available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">THINK THIN, LEAN PROTEIN & FIBER BAR, PEANUT</span></div>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">think!</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">9 images from retailers</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Product 12: Organic Dancing Leaves Tea -->
+        <div class="product-card">
+            <div class="row-number">12</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">12. Trot Dancing Leaves Green Tea</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0742676400592</span>
+                    <span>Size: 50 Tea Bag Tin</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Organic Dancing Leaves Tea (36 Tea Bag) by the Republic of Tea</div>
+                    <img src="https://images.barcodelookup.com/3799/37990038-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">The Republic Of Tea</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">The Republic Of Tea</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco > Beverages > Tea & Infusions</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 742676400592, EAN-13 0742676400592</span></div>
+                        <div class="description-text">Highest quality leaves from the birthplace of tea create a nutty yet distant sweetness with an emerald hue. Take enjoyment of distant sweetness of this fresh, bright cup. About The Republic of Tea Fou...</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="not-found">
+                        ✗ Not Found<br>
+                        <small>This product was not found in Apify</small>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">(organic Usda Dancing Leaves Green, 50 Tea Bag Tin) - The Republic Of Tea,</div>
+                    <div class="not-found" style="padding: 40px;">
+                        ✓ Found<br>
+                        <div style="margin-top: 10px;">📸 0 images available</div>
+                        <small style="display: block; margin-top: 10px;">No images for this product</small>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">(organic Usda Dancing Leaves Green, 50 Tea Bag Tin) - The Republic Of Tea,</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">No images available</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Product 13: Vital Proteins Collagen Creamer -->
+        <div class="product-card">
+            <div class="row-number">13</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">13. Collagen Creamer,original</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0810089955197</span>
+                    <span>Size: 10.34 Ounce (Pack of 1)</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Vital Proteins, Collagen Creamer®, Original, 10.3 Oz (293 G)</div>
+                    <img src="https://images.barcodelookup.com/108358/1083587873-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 6 images available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Vital Proteins</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Vital Proteins</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">N/A</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 810089955197, EAN-13 0810089955197</span></div>
+                        <div class="description-text">The Same Collagen You Love, Without the Plastic ScoopNow With Improved TasteMade Without Dairy & Gluten10 g Collagen Peptides Per ServingSkin, Hair, Nail + Joint Support^Made With Coconut Milk PowderD...</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Vital Proteins Collagen Creamer</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/IDglbbIULayUGcBye/records/ean_0810089955197_01.png?signature=bxqS1dkTRwK1JjcOowBX" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 600 x 600px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: PNG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Vital Proteins Collagen Creamer</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">271,870 bytes (~265 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:59:05</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="not-found">
+                        ✗ Not Found<br>
+                        <small>This product was not found in UPCitemdb</small>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Product 14: RJ45 Ethernet Connector -->
+        <div class="product-card">
+            <div class="row-number">14</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">14. Chobani Coffee Greek Yogurt</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0818290019592</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title" style="background: #ffebee; padding: 10px; border-left: 4px solid #f44336; margin-bottom: 10px;">
+                        ⚠️ INCORRECT DATA: 100 X RJ45 Coupler CAT5 CAT6 5E 8P8C Network Ethernet Connector Adapter Joiner
+                        <div style="font-size: 0.85em; color: #d32f2f; margin-top: 5px;">This UPC should be for Chobani Coffee Greek Yogurt, not a network cable</div>
+                    </div>
+                    <img src="https://images.barcodelookup.com/16026/160268087-1.jpg" alt="Product" class="product-image" style="opacity: 0.5; border: 3px solid #f44336;">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px; color: #f44336;">✗ Wrong product in database</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details (INCORRECT)</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Laswitch</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Laswitch</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Electronics > Electronics Accessories > Cables > Network Cables</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 818290019592, EAN-13 0818290019592</span></div>
+                        <div class="description-text" style="color: #d32f2f;">⚠️ Database Error: This UPC is incorrectly associated with network cables instead of Chobani yogurt. This represents a data quality issue in the Barcode Lookup API database.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Chobani Yogurt, Reduced Fat, Greek, Blended, Coffee - 5.3 Ounce</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/FI2AdcfrgL1eqLLN9/records/ean_0818290019592_01.jpg?signature=1ICgVV7aB96Vz9gwxcaY" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Chobani Yogurt, Reduced Fat, Greek, Blended, Coffee - 5.3 Ounce</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">250,344 bytes (~244 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:59:26</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title" style="background: #ffebee; padding: 10px; border-left: 4px solid #f44336; margin-bottom: 10px;">
+                        ⚠️ INCORRECT DATA: 100 X RJ45 Coupler CAT5 CAT6 5E 8P8C Network Ethernet Connector Adapter Joiner
+                        <div style="font-size: 0.85em; color: #d32f2f; margin-top: 5px;">This UPC should be for Chobani Coffee Greek Yogurt, not a network cable</div>
+                    </div>
+                    <img src="https://tshop.r10s.com/05c/cc3/f427/beac/c02d/045f/8362/11c7ea9b110242ac110003.jpg?_ex=512x512" alt="Product" class="product-image" style="opacity: 0.5; border: 3px solid #f44336;">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 512 x 512px</div>
+                        <div style="margin-top: 5px; color: #f44336;">✗ Wrong product in database</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details (INCORRECT)</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">100 X RJ45 Coupler CAT5 CAT6 5E 8P8C Network Ethernet Connector Adapter Joiner</span></div>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">laswitch</span></div>
+                        <div class="detail-row" style="color: #d32f2f;"><span class="detail-label">⚠️ Data Quality Issue:</span> <span class="detail-value">This UPC is incorrectly associated with network cables in the UPCitemdb database</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Product 15: Drumroll Mini Donuts -->
+        <div class="product-card">
+            <div class="row-number">15</div>
+            <div class="product-card-content">
+            <div class="product-header">
+                <div class="product-title">15. Drumroll Chocolate Glazed Donuts</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0850017604032</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Drumroll Snacks - Mini Double Chocolate Donuts  3 Pack</div>
+                    <img src="https://images.barcodelookup.com/81678/816782549-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 2 images available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">GreenHouse Foods LLC</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 850017604032, EAN-13 0850017604032</span></div>
+                        <div class="description-text">Rooted in fun backed by nutrition.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Drumroll Snacks Chocolate Glazed Mini Donuts Gluten Free</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/aITwYXFgPgUGmwhhu/records/ean_0850017604032_01.jpg?signature=IpepnpfjmU5GOTqgeZGL" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1280 x 1280px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Drumroll Snacks Chocolate Glazed Mini Donuts Gluten Free</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">129,705 bytes (~126 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:59:47</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">Drumroll Snacks - Mini Double Chocolate Donuts  3 pack</div>
+                    <img src="https://i5.walmartimages.com/asr/12e3c348-23f0-42e4-8684-080fb4ea671e.c633beaacde005bf6b52d3ca341468e5.png?odnHeight=450&odnWidth=450&odnBg=ffffff" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 450 x 450px</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Drumroll Snacks - Mini Double Chocolate Donuts  3 pack</span></div>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">GreenHouse Foods</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">1 image from retailers</span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <footer>
+            <h2 style="margin-bottom: 15px;">📊 Image Quality Summary</h2>
+            <p style="font-size: 1.1em; margin-bottom: 10px;"><strong>Resolution Comparison:</strong></p>
+            <p>
+                🏆 <strong>Barcode Lookup API:</strong> 15/15 products found (100%) | Standard resolution (exact dimensions unknown)<br>
+                🏆 <strong>Apify EAN/GTIN:</strong> 14/15 products found (93%) | High-resolution (512px - 1280px)<br>
+                🏆 <strong>UPCitemdb:</strong> 13/15 products found (87%) | MOST images per product (up to 9 images each!)
+            </p>
+            <p style="margin-top: 15px; font-size: 0.95em;">
+                <strong>Note:</strong> Apify provides the highest resolution images (1000x1000px to 1200x1200px).<br>
+                UPCitemdb provides the most images per product but requires authentication to view them.<br>
+                Barcode Lookup provides reliable single images for every product.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
+

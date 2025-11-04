@@ -1,0 +1,300 @@
+
+        <!-- Product 11: Think Thin Protein Bar -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title">11. Think Thin Protein Bar</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0753656710990</span>
+                    <span>Size: All</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">HG1536861 1.41 Oz Thinkthin Bar Lean Protein Fiber, Chocolate Peanut</div>
+                    <img src="https://images.barcodelookup.com/1032/10325579-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Think Products</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Think</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Health & Beauty > Health Care > Fitness & Nutrition > Vitamins & Supplements</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value">0.01lb</span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 753656710990, EAN-13 0753656710990</span></div>
+                        <div class="description-text">Features   At only 150 calories, thinkThin Lean Protein and Fiber bars deliver the perfect balance of 10g of protein and 5g of fiber to give you energy and help keep you full and satisfied; Rich roast...</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Think Thin Protein & Fiber Bar Chunky Chocolate Peanut</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/vdXhXyrMrYGSfFob8/records/ean_0753656710990_01.jpg?signature=v7CiRrRggmSpJqQXnmUI" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1280 x 1280px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Think Thin Protein & Fiber Bar Chunky Chocolate Peanut</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">134,364 bytes (~131 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:58:23</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">THINK THIN, LEAN PROTEIN & FIBER BAR, PEANUT</div>
+                    <img src="https://i5.walmartimages.com/asr/d404f723-1a1b-49ef-8e4f-e69297d22dec.59b898ecca726553dc6e8f014075780b.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 450 x 450px</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 9 images available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">THINK THIN, LEAN PROTEIN & FIBER BAR, PEANUT</span></div>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">think!</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">9 images from retailers</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Product 12: Organic Dancing Leaves Tea -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title">12. Organic Dancing Leaves Tea</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0742676400592</span>
+                    <span>Size: 50 Tea Bag Tin</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Organic Dancing Leaves Tea (36 Tea Bag) by the Republic of Tea</div>
+                    <img src="https://images.barcodelookup.com/3799/37990038-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">The Republic Of Tea</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">The Republic Of Tea</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco > Beverages > Tea & Infusions</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value"></span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 742676400592, EAN-13 0742676400592</span></div>
+                        <div class="description-text">Highest quality leaves from the birthplace of tea create a nutty yet distant sweetness with an emerald hue. Take enjoyment of distant sweetness of this fresh, bright cup. About The Republic of Tea Fou...</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="not-found">
+                        ✗ Not Found<br>
+                        <small>This product was not found in Apify</small>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">(organic Usda Dancing Leaves Green, 50 Tea Bag Tin) - The Republic Of Tea,</div>
+                    <div class="not-found" style="padding: 40px;">
+                        ✓ Found<br>
+                        <div style="margin-top: 10px;">📸 0 images available</div>
+                        <small style="display: block; margin-top: 10px;">No images for this product</small>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">(organic Usda Dancing Leaves Green, 50 Tea Bag Tin) - The Republic Of Tea,</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">No images available</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Product 13: Vital Proteins Collagen Creamer -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title">13. Vital Proteins Collagen Creamer</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0810089955197</span>
+                    <span>Size: 10.34 Ounce (Pack of 1)</span>
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Vital Proteins, Collagen Creamer®, Original, 10.3 Oz (293 G)</div>
+                    <img src="https://images.barcodelookup.com/108358/1083587873-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 6 images available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Vital Proteins</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Vital Proteins</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value"></span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value"></span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 810089955197, EAN-13 0810089955197</span></div>
+                        <div class="description-text">The Same Collagen You Love, Without the Plastic ScoopNow With Improved TasteMade Without Dairy & Gluten10 g Collagen Peptides Per ServingSkin, Hair, Nail + Joint Support^Made With Coconut Milk PowderD...</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Vital Proteins Collagen Creamer</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/IDglbbIULayUGcBye/records/ean_0810089955197_01.png?signature=bxqS1dkTRwK1JjcOowBX" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 600 x 600px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: PNG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Vital Proteins Collagen Creamer</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">271,870 bytes (~265 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:59:05</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="not-found">
+                        ✗ Not Found<br>
+                        <small>This product was not found in UPCitemdb</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Product 14: RJ45 Ethernet Connector -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title">14. RJ45 Ethernet Connector</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0818290019592</span>
+                    
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">100 X RJ45 Coupler CAT5 CAT6 5E 8P8C Network Ethernet Connector Adapter Joiner</div>
+                    <img src="https://images.barcodelookup.com/16026/160268087-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">Laswitch</span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">Laswitch</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Electronics > Electronics Accessories > Cables > Network Cables</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value"></span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 818290019592, EAN-13 0818290019592</span></div>
+                        <div class="description-text">100 X RJ45 Coupler CAT5 CAT6 5E 8P8C Network Ethernet Connector Adapter Joiner condition: New Connector A: RJ-45 RJ45 Type: Plug, Jack MPN: Does Not Apply Brand: LAswitch Connection Type: Ethernet Cat...</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Chobani Yogurt, Reduced Fat, Greek, Blended, Coffee - 5.3 Ounce</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/FI2AdcfrgL1eqLLN9/records/ean_0818290019592_01.jpg?signature=1ICgVV7aB96Vz9gwxcaY" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1000 x 1000px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Chobani Yogurt, Reduced Fat, Greek, Blended, Coffee - 5.3 Ounce</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">250,344 bytes (~244 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:59:26</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">100 X RJ45 Coupler CAT5 CAT6 5E 8P8C Network Ethernet Connector Adapter Joiner</div>
+                    <img src="https://tshop.r10s.com/05c/cc3/f427/beac/c02d/045f/8362/11c7ea9b110242ac110003.jpg?_ex=512x512" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 450 x 450px</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">100 X RJ45 Coupler CAT5 CAT6 5E 8P8C Network Ethernet Connector Adapter Joiner</span></div>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">laswitch</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">1 image from retailers</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Product 15: Drumroll Mini Donuts -->
+        <div class="product-card">
+            <div class="product-header">
+                <div class="product-title">15. Drumroll Mini Donuts</div>
+                <div class="product-meta">
+                    <span class="ean-code">EAN: 0850017604032</span>
+                    
+                </div>
+            </div>
+            <div class="image-comparison">
+                <div class="api-column barcode-lookup">
+                    <div class="api-name barcode-lookup-color">🏆 Barcode Lookup API</div>
+                    <div class="api-title">Drumroll Snacks - Mini Double Chocolate Donuts  3 Pack</div>
+                    <img src="https://images.barcodelookup.com/81678/816782549-1.jpg" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: Unknown (Standard)</div>
+                        <div style="margin-top: 5px;">✓ 2 images available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value"></span></div>
+                        <div class="detail-row"><span class="detail-label">Manufacturer:</span> <span class="detail-value">GreenHouse Foods LLC</span></div>
+                        <div class="detail-row"><span class="detail-label">Category:</span> <span class="detail-value">Food, Beverages & Tobacco</span></div>
+                        <div class="detail-row"><span class="detail-label">Weight:</span> <span class="detail-value"></span></div>
+                        <div class="detail-row"><span class="detail-label">UPC/EAN:</span> <span class="detail-value">UPC-A 850017604032, EAN-13 0850017604032</span></div>
+                        <div class="description-text">Rooted in fun backed by nutrition.</div>
+                    </div>
+                </div>
+                <div class="api-column apify">
+                    <div class="api-name apify-color">🏆 Apify EAN/GTIN</div>
+                    <div class="api-title">Drumroll Snacks Chocolate Glazed Mini Donuts Gluten Free</div>
+                    <img src="https://api.apify.com/v2/key-value-stores/aITwYXFgPgUGmwhhu/records/ean_0850017604032_01.jpg?signature=IpepnpfjmU5GOTqgeZGL" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 1280 x 1280px</div>
+                        <div style="margin-top: 5px;">✓ High-resolution image</div>
+                        <div>Format: JPEG</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Drumroll Snacks Chocolate Glazed Mini Donuts Gluten Free</span></div>
+                        <div class="detail-row"><span class="detail-label">Country:</span> <span class="detail-value">Global</span></div>
+                        <div class="detail-row"><span class="detail-label">File Size:</span> <span class="detail-value">129,705 bytes (~126 KB)</span></div>
+                        <div class="detail-row"><span class="detail-label">Scraped:</span> <span class="detail-value">November 3, 2025 23:59:47</span></div>
+                    </div>
+                </div>
+                <div class="api-column upcitemdb">
+                    <div class="api-name upcitemdb-color">🏆 UPCitemdb</div>
+                    <div class="api-title">Drumroll Snacks - Mini Double Chocolate Donuts  3 pack</div>
+                    <img src="https://i5.walmartimages.com/asr/12e3c348-23f0-42e4-8684-080fb4ea671e.c633beaacde005bf6b52d3ca341468e5.png?odnHeight=450&odnWidth=450&odnBg=ffffff" alt="Product" class="product-image">
+                    <div class="image-info">
+                        <div class="resolution">Resolution: 450 x 450px</div>
+                        <div class="image-count" style="margin-top: 8px;">📸 1 image available</div>
+                    </div>
+                    <div class="product-details">
+                        <h4>Product Details</h4>
+                        <div class="detail-row"><span class="detail-label">Title:</span> <span class="detail-value">Drumroll Snacks - Mini Double Chocolate Donuts  3 pack</span></div>
+                        <div class="detail-row"><span class="detail-label">Brand:</span> <span class="detail-value">GreenHouse Foods</span></div>
+                        <div class="detail-row"><span class="detail-label">Images:</span> <span class="detail-value">1 image from retailers</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -13,7 +13,7 @@
 |----|--------------|---------|-----------|------|--------------|---------------|------------------|
 | **1** | **Barcode Lookup API** | [barcodelookup.com/api](https://www.barcodelookup.com/api) | Advanced Plan | **$249** | **$0.0265** | ❌ **No (25,000 calls/month)** | **Hours to 1 day** |
 | **2** | **UPCitemdb** | [devs.upcitemdb.com/#plans](https://devs.upcitemdb.com/#plans) | Developer Plan | **$99** | $0.0105 | ⚠️ Limited (2000/sheet) | **~5-6 hours** |
-| **3** | **Go-UPC API** | [go-upc.com/plans](https://go-upc.com/plans) | Startup Plan | **$245** | $0.026 | ❌ **No (45,000 calls/month)** | **~1 day** |
+| **3** | **Go-UPC API** ⏳ *Awaiting trial API key approval* | [go-upc.com/plans](https://go-upc.com/plans) | Startup Plan | **$245** | $0.026 | ❌ **No (45,000 calls/month)** | **~1 day** |
 | **4** | **Apify EAN/GTIN** | [apify.com/ean-product-image-search](https://apify.com/s-r/ean-product-image-search---extract-images-from-any-ean-gtin) | Pay-per-use | **$10 per 1,000 images** | $0.01 | ✅ **YES - Batch extract** | **~Hours** |
 
 ---
@@ -214,8 +214,10 @@ This is THE SAME COMPANY as "Barcode Lookup Bulk" below, but 8x cheaper! They ch
 
 ---
 
-### 8. **Go-UPC API (Regular)**
+### 8. **Go-UPC API (Regular)** ⏳
 **Website**: https://go-upc.com/plans
+
+> **Note**: Currently awaiting trial API key approval from Go-UPC to test their service.
 
 #### Pricing Structure:
 | Plan | Monthly Cost | API Requests/Month | Cost per UPC (9,394) |
