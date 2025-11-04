@@ -1,0 +1,190 @@
+[
+  {
+    "number": 16,
+    "upc": "727915126457",
+    "ean": "0727915126457",
+    "barcode_lookup": {
+      "found": true,
+      "title": "Yogurt Covered",
+      "brand": "NATURAL CRAVINGS",
+      "category": "Food, Beverages & Tobacco",
+      "manufacturer": "",
+      "description": "Yogurt Covered. Serving size: 1 ONZ (28 g). Country of origin: United States.",
+      "images": [],
+      "barcode_formats": "UPC-A 727915126457, EAN-13 0727915126457",
+      "size": "",
+      "weight": ""
+    },
+    "upcitemdb": {
+      "found": true,
+      "title": "YOGURT COVERED",
+      "brand": "",
+      "images": [],
+      "image_count": 0
+    },
+    "apify": {
+      "found": true,
+      "title": "Nutty Yogurt Covered - 130 Calories",
+      "country_found": "Global",
+      "image_url": "https://api.apify.com/v2/key-value-stores/sEU8SNkv8JqPzBR3O/records/ean_0727915126457_01.png?signature=41jSHWQAmNjNSuGO8LIN",
+      "width": 736,
+      "height": 558,
+      "size_bytes": 268367,
+      "scraped_at": "2025-11-04 23:51:50"
+    },
+    "go_upc": {
+      "found": true,
+      "name": "Nutty Yogurt Covered - 130 Calories",
+      "description": "Indulge in the creamy and fruity Natural Cravings Cranberries Yogurts. Available in a 7 oz pack with 12 items.",
+      "brand": "Nutty",
+      "category": "Yogurt",
+      "image_url": "https://go-upc.s3.amazonaws.com/images/185457541.png"
+    }
+  },
+  {
+    "number": 17,
+    "upc": "850042382189",
+    "ean": "0850042382189",
+    "barcode_lookup": {
+      "found": true,
+      "title": "Dumpling Daughter - Ginger Soy Sauce (8 Oz)",
+      "brand": "Dumpling Daughter",
+      "category": "",
+      "manufacturer": "DUMPLING DAUGHTER, INC",
+      "description": "",
+      "images": [
+        "https://images.barcodelookup.com/129313/1293138002-1.jpg",
+        "https://images.barcodelookup.com/129313/1293138002-2.jpg",
+        "https://images.barcodelookup.com/129313/1293138002-3.jpg",
+        "https://images.barcodelookup.com/129313/1293138002-4.jpg",
+        "https://images.barcodelookup.com/129313/1293138002-5.jpg",
+        "https://images.barcodelookup.com/129313/1293138002-6.jpg",
+        "https://images.barcodelookup.com/129313/1293138002-7.jpg",
+        "https://images.barcodelookup.com/129313/1293138002-8.jpg",
+        "https://images.barcodelookup.com/129313/1293138002-9.jpg"
+      ],
+      "barcode_formats": "UPC-A 850042382189, EAN-13 0850042382189",
+      "size": "8 Fl Oz",
+      "weight": ""
+    },
+    "upcitemdb": {
+      "found": false
+    },
+    "apify": {
+      "found": true,
+      "title": "Dumpling Daughter Ginger Soy Secret Sauce",
+      "country_found": "Global",
+      "image_url": "https://api.apify.com/v2/key-value-stores/o8B7xBmJ7IWc9JyIr/records/ean_0850042382189_01.png?signature=pVMiqFEiMhmY4zNIzHov",
+      "width": 1658,
+      "height": 1658,
+      "size_bytes": 1093290,
+      "scraped_at": "2025-11-04 23:52:19"
+    },
+    "go_upc": {
+      "found": true,
+      "name": "Dumpling Daughter Ginger Soy Secret Sauce",
+      "description": "No description found.",
+      "brand": "Dumpling Daughter",
+      "category": "Soy Sauce",
+      "image_url": "https://go-upc.s3.amazonaws.com/images/328776561.png"
+    }
+  },
+  {
+    "number": 18,
+    "upc": "810291007752",
+    "ean": "0810291007752",
+    "barcode_lookup": {
+      "found": false,
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    "upcitemdb": {
+      "found": true,
+      "title": "Tate's Bake Shop Salted Caramel Chocolate Chip Cookies - 6.5oz",
+      "brand": "Tate's Bake Shop",
+      "images": [
+        "https://target.scene7.com/is/image/Target/GUEST_53fa2cea-0e72-4392-a2d2-decb88d59aee?wid=1000&hei=1000",
+        "https://i5.walmartimages.com/asr/d82e7e8d-5e2f-4df3-b4af-133fc39783a6.ef30dda570d4c6a5e2b6f0a2c2fba45a.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff",
+        "https://products.blains.com/600/159/1590184.jpg"
+      ],
+      "image_count": 3
+    },
+    "apify": {
+      "found": true,
+      "title": "Tate's Bake Shop Salted Caramel Chocolate Chip Cookies - 6.5oz",
+      "country_found": "Global",
+      "image_url": "https://api.apify.com/v2/key-value-stores/pP89gWDj5sgAQdzog/records/ean_0810291007752_01.jpg?signature=1De8Y69kzf8uLf71uF8Yh",
+      "width": 1000,
+      "height": 1000,
+      "size_bytes": 334496,
+      "scraped_at": "2025-11-04 23:52:48"
+    },
+    "go_upc": {
+      "found": true,
+      "name": "Tate's Bake Shop Salted Caramel Chocolate Chip Cookies - 6.5oz",
+      "description": "Treat yourself to a bake shop quality snack with Tate's Bake Shop Salted Caramel Chocolate Chip Cookies. Uniquely thin and deeply delicious, these kosher snack cookies are a buttery, sweet delight with salted caramel. The light, crisp texture makes these cookies a perfect sweet treat for savoring for yourself or sharing with friends in a cookies bag or cookies gift box. These cookies also make great lunch snacks, and they're a sweet addition to other chocolate dessert recipes. They also are fantastic as a sweet treat, evening snacks, Easter basket fillers or as a treat during a summer picnic. Tate's Bake Shop cookies come in a resealable 6.5 ounce bag to keep each cookie crisp and fresh.",
+      "brand": "Tate's",
+      "category": "Cookies",
+      "image_url": "https://go-upc.s3.amazonaws.com/images/302672836.jpeg"
+    }
+  },
+  {
+    "number": 19,
+    "upc": "819898010110",
+    "ean": "0819898010110",
+    "barcode_lookup": {
+      "found": false,
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    "upcitemdb": {
+      "found": false
+    },
+    "apify": {
+      "found": true,
+      "title": "Back To Nature Cracker Mit K\u00e4segeschmack, Gentechnikfrei, Hergestellt Aus Weizenmehl, Vegan, Leckere Snacks, Cheezy Square, 142 Ml",
+      "country_found": "DE",
+      "image_url": "https://api.apify.com/v2/key-value-stores/yg8Z7k2wrA9gSuScQ/records/ean_0819898010110_01.jpg?signature=Ok3Ncg3aR9ylmOooXGyL",
+      "width": 500,
+      "height": 500,
+      "size_bytes": 11254,
+      "scraped_at": "2025-11-04 23:53:19"
+    },
+    "go_upc": {
+      "found": true,
+      "name": "Back to Nature Crackers Cheezy Square",
+      "description": "There aren\u2019t many plant-based snacks that are also super-cheezy tasting. Packed full of flavor and premium ingredients, our crispy Cheezy Crackers tick all the boxes. Snacking at its finest!",
+      "brand": "Back to Nature",
+      "category": "Crackers",
+      "image_url": "https://go-upc.s3.amazonaws.com/images/376342231.png"
+    }
+  },
+  {
+    "number": 20,
+    "upc": "606274400456",
+    "ean": "0606274400456",
+    "barcode_lookup": {
+      "found": false,
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    "upcitemdb": {
+      "found": false
+    },
+    "apify": {
+      "found": true,
+      "title": "Vermont Smoke & Cure Stick Smoked Uncured Pork Pepperoni, 1 Oz",
+      "country_found": "Global",
+      "image_url": "https://api.apify.com/v2/key-value-stores/c8F9T9axJxcEHGBSY/records/ean_0606274400456_01.png?signature=SYYgPZk4Jjtr2r0Ixxbw",
+      "width": 674,
+      "height": 298,
+      "size_bytes": 49162,
+      "scraped_at": "2025-11-04 23:53:50"
+    },
+    "go_upc": {
+      "found": true,
+      "name": "Vermont Smoke & Cure Stick Smoked Uncured Pork Pepperoni, 1 Oz",
+      "description": "Perfect solo or paired with cheese, our Uncured Pork Pepperoni stick blends fennel, paprika, garlic and red pepper flakes for a smoky, spicy pepperoni taste.From vegetarian-fed meats raised without antibiotics or added hormones. Made without sodium nitrate or preservatives.",
+      "brand": "Vermont Smoke & Cure",
+      "category": "Jerky",
+      "image_url": "https://go-upc.s3.amazonaws.com/images/340123978.png"
+    }
+  }
+]
