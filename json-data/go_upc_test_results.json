@@ -1,0 +1,102 @@
+[
+  {
+    "upc": "817108021048",
+    "ean": "0817108021048",
+    "expected_name": "Foraging Fox Avocado Mayo",
+    "api_name": "The Foraging Fox Avocado And Lemon Mayo",
+    "brand": "The Foraging Fox",
+    "category": "Condiments & Sauces",
+    "images": [],
+    "success": true
+  },
+  {
+    "upc": "193908002204",
+    "ean": "0193908002204",
+    "expected_name": "Rx Bar Vanilla Almond",
+    "api_name": "Rxbar Vanilla Almond Protein 1.83 Ounce -- 12 Per Case",
+    "brand": "Rxbar",
+    "category": "Motor Vehicle Roll Cages & Bars",
+    "images": [],
+    "success": true
+  },
+  {
+    "upc": "850028051252",
+    "ean": "0850028051252",
+    "expected_name": "Jonny Pops Rainbow Fruit Pops",
+    "api_name": "JonnyPops Dairy Free, Organic, Rainbow Fruit Stacks",
+    "brand": "JonnyPops",
+    "category": "Ice Cream & Frozen Yogurt",
+    "images": [],
+    "success": true
+  },
+  {
+    "upc": "611269003123",
+    "ean": "0611269003123",
+    "expected_name": "Redbull The Pink Edition",
+    "api_name": "Red Bull Pink Edition Wild Berries Energy Drink 12 Fl Oz",
+    "brand": "Red Bull",
+    "category": "Sports & Energy Drinks",
+    "images": [],
+    "success": true
+  },
+  {
+    "upc": "734865106132",
+    "ean": "0734865106132",
+    "expected_name": "India Tree Decoratifs Cherries",
+    "api_name": "India Tree Bowl Of Cherries Decorations",
+    "brand": "India Tree",
+    "category": "Bowls",
+    "images": [],
+    "success": true
+  },
+  {
+    "upc": "894306000044",
+    "ean": "0894306000044",
+    "expected_name": "Frantoia Extra Virgin Olive Oil",
+    "api_name": "Frantoia Extra Virgin Olive Oil, 33.8 Fl Oz",
+    "brand": "Frantoia",
+    "category": "Cooking Oils",
+    "images": [],
+    "success": true
+  },
+  {
+    "upc": "853923002107",
+    "ean": "0853923002107",
+    "expected_name": "Noosa Lemon Yogurt",
+    "api_name": "Noosa Lemon Probiotic Whole Milk Yoghurt - 8oz",
+    "brand": "Noosa",
+    "category": "Yogurt",
+    "images": [],
+    "success": true
+  },
+  {
+    "upc": "602644020811",
+    "ean": "0602644020811",
+    "expected_name": "EB D RNSE COND 16OZ",
+    "api_name": "Earthbath Oatmeal & Aloe Conditioner, Vanilla & Almond 1ea/16 Oz",
+    "brand": "Earthbath",
+    "category": "Conditioners",
+    "images": [],
+    "success": true
+  },
+  {
+    "upc": "818780010269",
+    "ean": "0818780010269",
+    "expected_name": "Angie's Boom Chicka Pop Sea Salt Popcorn",
+    "api_name": "Angie's BOOMCHICKAPOP Kettle Corn Boom Chicka Pop Sea Salt Popcorn Snack",
+    "brand": "Angie's BOOMCHICKAPOP",
+    "category": "Popcorn",
+    "images": [],
+    "success": true
+  },
+  {
+    "upc": "689544061038",
+    "ean": "0689544061038",
+    "expected_name": "Fage Creamy Banana Yogurt",
+    "api_name": "Fage Cream Dessert, Banana Cream, Creamy Dreamy 4.4 Oz",
+    "brand": "Fage",
+    "category": "Yogurt",
+    "images": [],
+    "success": true
+  }
+]
